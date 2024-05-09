@@ -8,40 +8,64 @@ const comments = new Hono<{
     }
 }>()
 
+interface CommentInput {
+    postId: string;
+    userId: string;
+    content: string;
+}
+
+
+interface CommentInput {
+    postId: string;
+    userId: string;
+    content: string;
+}
 
 comments.post('/', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate())
 
-    const { postId, userId, content } = await c.req.json()
+    const body: CommentInput = await c.req.json();
 
-    if (!postId || !postId.trim()) {
-        return c.json({ message: 'PostId is required' })
+    if (!body.postId.trim()) {
+        return c.json({ message: 'PostId is required' }, 400);
     }
 
-    if (!userId || !userId.trim()) {
-        return c.json({ message: 'UserId is required' })
+    if (!body.userId.trim()) {
+        return c.json({ message: 'UserId is required' }, 400);
     }
 
-    if (!content || !content.trim()) {
-        return c.json({ message: 'Content is required' })
+    if (!body.content.trim()) {
+        return c.json({ message: 'Content is required' }, 400);
     }
 
+    // Check if the post exists
+    const postExists = await prisma.post.findUnique({
+        where: { postId: body.postId },
+        select: { postId: true, channelId: true } // Only fetch the postId to check existence
+    });
+
+    if (!postExists) {
+        return c.json({ message: 'Post not found' }, 404);
+    }
+
+    // Create the comment
     try {
-        const post = await prisma.post.findFirst({
-            where: {
-                postId
+        const comment = await prisma.comment.create({
+            data: {
+                postId: body.postId,
+                fromUserId: body.userId,
+                content: body.content,
+                channelId: postExists.channelId
             }
-        })
-
-        return c.json(post)
+        });
+        return c.json({ id: comment.commentId, message: 'Comment created' }, 201);
     } catch (error) {
-        console.error("Failed to find post:", error)
-        return c.json({ message: 'Error finding post' })
+        console.error("Failed to create comment:", error);
+        return c.json({ message: 'Error creating comment' }, 500);
     }
-
-})
+});
 
 export default comments;
 

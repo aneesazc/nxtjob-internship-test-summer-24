@@ -6,49 +6,40 @@ const users = new Hono<{
     Bindings: {
         DATABASE_URL: string
     }
-}>()
+}>();
 
 users.post('/', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate())
-
+    
     const body = await c.req.json()
     console.log(body)
-    if (!body.username) {
-        return c.json({ message: 'Username is required' })
+    if (!body.username || body.username.trim() === '') {
+        return c.json({ message: 'Username is required' }, 400); // Bad Request
     }
-    // no auth
-    // create new user
-    // first check if user already exists
+
     try {
         const existingUser = await prisma.user.findFirst({
             where: {
-                username: body.username
-            }
-        })
+                username: body.username,
+            },
+        });
         if (existingUser) {
-            return c.json({ id: existingUser.userId, message: 'User already exists'})
+            return c.json({ id: existingUser.userId, message: 'User already exists' }, 409); // Conflict
         }
-        
-    } catch (error) {
-        console.log(error)
-        return c.json({ message: 'Error checking if user exists'})
-    }
-    
-    try {
+
         const user = await prisma.user.create({
             data: {
-                username: body.username
-            }
-        })
-        return c.json({ id: user.userId, message: 'User created'})
-        
+                username: body.username,
+            },
+        });
+        return c.json({ id: user.userId, message: 'User created' }, 201); // Created
     } catch (error) {
-        console.log(error)
-        return c.json({ message: 'Error creating user'})
+        console.error('Error in user creation:', error);
+        return c.json({ message: 'Error creating user' }, 500); // Internal Server Error
     }
     
-  })
+})
 
 export default users
