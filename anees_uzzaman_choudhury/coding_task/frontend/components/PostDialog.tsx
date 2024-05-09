@@ -20,7 +20,7 @@ const PostDialog = ({ open, setOpen }: { open: any, setOpen: any }) => {
             </DialogDescription>
           </div>
 
-          <textarea className="p-2 lg:p-4 rounded w-full mt-4 h-[55%]"
+          <textarea className="p-2 lg:p-4 rounded w-full mt-4 h-[55%] resize-none focus:outline-none focus:ring-2 focus:ring-primaryPurple focus:ring-opacity-50"
             placeholder="What's on your mind?"></textarea>
           <div className="flex p-3 items-center content-center gap-custom self-stretch flex-wrap bg-white">
             <button className='flex justify-center items-center rounded-lg bg-lightPurple px-2 py-1 gap-1'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -70,7 +70,7 @@ const PostDialog = ({ open, setOpen }: { open: any, setOpen: any }) => {
               <DialogClose asChild>
                 <button className="px-4 py-1 lg:px-10 lg:py-2 border-2 rounded-xl border-gray-300 text-lg text-black bg-white hover:bg-gray-200">Cancel</button>
               </DialogClose>
-              <button className="px-5 py-1 lg:px-10 lg:py-2 border-2 rounded-xl border-gray-300 text-lg text-white bg-primaryPink hover:bg-pink-600">Post</button>
+              <button className="px-5 py-1 lg:px-12 lg:py-2 border-2 rounded-xl border-gray-300 text-lg text-white bg-primaryPink hover:bg-pink-600">Post</button>
             </div>
           </div>
 

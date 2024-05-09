@@ -26,7 +26,7 @@ const TopView = () => {
                         A
                     </div>
                     <button
-                        className="py-2 px-4 bg-gray-100 rounded-3xl text-gray-400 font-semibold shadow-md hover:bg-purple-300 w-full mx-2"
+                        className="py-2 px-4 bg-gray-100 rounded-3xl text-gray-400 font-semibold shadow-md hover:bg-lightPurple hover:text-gray-700 w-full mx-2"
                         onClick={() => setDialogOpen(true)} // Triggers the dialog to open
                     >
                         Start a post

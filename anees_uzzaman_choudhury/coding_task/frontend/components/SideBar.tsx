@@ -51,29 +51,29 @@ const SideBar = () => {
               </Link>
             </li>
             <li>
-              <Link href="introduction" className="flex items-center p-2 text-gray-900 rounded-lg group">
+              <Link href="introduction" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/introduction' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
 
                 <span className="flex-1 ms-3 whitespace-nowrap">Introduction</span>
                 <span className="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span>
               </Link>
             </li>
             <li>
-              <Link href="/announcements" className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group">
+              <Link href="/announcements" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/announcements' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
 
                 <span className="flex-1 ms-3 whitespace-nowrap">Announcements</span>
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">3</span>
               </Link>
             </li>
             <li>
-              <Link href="/success" className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group">
+              <Link href="/success" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/success' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
 
                 <span className="flex-1 ms-3 whitespace-nowrap">Success Stories</span>
               </Link>
             </li>
             <li>
-              <Link href="/" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400  group link ${pathname === '/' ? 'bg-lightPurple' : ''}`}>
+              <Link href="/" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
 
-                <span className="flex-1 ms-3 whitespace-nowrap">Career Discussions</span>
+                <span className={`flex-1 ms-3 whitespace-nowrap link `}>Career Discussions</span>
               </Link>
             </li>
             <li>
