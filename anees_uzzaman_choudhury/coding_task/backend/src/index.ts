@@ -1,10 +1,13 @@
 import { Hono } from 'hono'
+import { cors } from 'hono/cors'
 import { upgradeWebSocket } from 'hono/cloudflare-workers'
 import posts from './routes/postsRoute'
 import comments from './routes/commentsRoute'
 import users from './routes/userRoute'
 
 const app = new Hono()
+
+app.use('/*', cors())
 
 app.get('/', (c) => {
   return c.text('Hello Hono!')

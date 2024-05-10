@@ -15,10 +15,10 @@ const LogoHeader = () => {
                 <g filter="url(#filter1_d_2034_119)">
                     <path d="M15.4703 8.92904C15.3449 9.90364 15.0255 10.8693 14.497 11.7715C14.2622 12.1691 14.0015 12.5349 13.7099 12.871L13.7079 12.873C13.689 12.8968 13.6671 12.9236 13.6452 12.9474C13.7059 12.875 13.7587 12.7957 13.8094 12.7094C14.3388 11.8072 14.0313 10.6462 13.1258 10.1198C12.9327 10.0087 12.7267 9.93437 12.5217 9.89373C12.4899 9.88877 12.459 9.88381 12.4302 9.87885C12.3794 9.87191 12.3307 9.86002 12.2849 9.84515C12.1207 9.8045 11.9585 9.73906 11.8062 9.64983C10.9007 9.12238 10.5932 7.96238 11.1226 7.06016C11.3952 6.59121 11.8401 6.28286 12.3307 6.16984C12.3715 6.15992 12.4152 6.151 12.459 6.14307C12.4909 6.13811 12.5197 6.13613 12.5486 6.13117C12.5556 6.12919 12.5635 6.12919 12.5705 6.12919C13.1088 6.03996 13.6094 5.7227 13.9069 5.21408C14.3199 4.50916 14.2234 3.64957 13.7358 3.05768C15.12 4.68465 15.7459 6.8242 15.4723 8.92805L15.4703 8.92904Z" fill="#FBFBFB" />
                 </g>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.51538 3.23036C7.72638 3.21426 7.93882 3.21237 8.15115 3.2252C8.21587 3.22692 8.28133 3.23311 8.34625 3.23925C8.3562 3.24019 8.36613 3.24113 8.37605 3.24206H8.37605C8.39297 3.24206 8.40988 3.24206 8.42481 3.24701C8.5084 3.25395 8.59099 3.26585 8.67558 3.28072C8.67906 3.28072 8.68205 3.28122 8.68503 3.28171C8.68802 3.28221 8.691 3.28271 8.69449 3.28271C8.84475 3.30749 8.99203 3.33823 9.13931 3.37689C9.14229 3.37689 9.14428 3.37689 9.14926 3.37888C9.55328 3.48397 9.94635 3.64558 10.3235 3.86469C11.2589 4.408 11.9396 5.22198 12.3217 6.15097C12.3655 6.15097 12.4113 6.14899 12.4571 6.14403C12.472 6.14171 12.4863 6.14004 12.5002 6.13841C12.516 6.13656 12.5313 6.13477 12.5466 6.13213C12.5536 6.13015 12.5615 6.13015 12.5685 6.13015C13.1079 6.04092 13.6074 5.72266 13.905 5.21504L13.903 5.21306C14.3159 4.50814 14.2194 3.64855 13.7318 3.05665C13.7209 3.04327 13.7094 3.03013 13.698 3.017C13.6865 3.00386 13.6751 2.99072 13.6641 2.97734C13.1327 2.36859 12.4949 1.83717 11.7585 1.41085C10.826 0.869516 9.82594 0.547294 8.81888 0.429312C8.68852 0.412457 8.55616 0.40056 8.42282 0.39362C8.26061 0.378748 8.10139 0.373791 7.94217 0.371808H7.94018C7.79833 0.370875 7.65668 0.373905 7.51538 0.380854V3.23036Z" fill="url(#paint2_linear_2034_119)" />
+                <path fillRule="evenodd" clipRule="evenodd" d="M7.51538 3.23036C7.72638 3.21426 7.93882 3.21237 8.15115 3.2252C8.21587 3.22692 8.28133 3.23311 8.34625 3.23925C8.3562 3.24019 8.36613 3.24113 8.37605 3.24206H8.37605C8.39297 3.24206 8.40988 3.24206 8.42481 3.24701C8.5084 3.25395 8.59099 3.26585 8.67558 3.28072C8.67906 3.28072 8.68205 3.28122 8.68503 3.28171C8.68802 3.28221 8.691 3.28271 8.69449 3.28271C8.84475 3.30749 8.99203 3.33823 9.13931 3.37689C9.14229 3.37689 9.14428 3.37689 9.14926 3.37888C9.55328 3.48397 9.94635 3.64558 10.3235 3.86469C11.2589 4.408 11.9396 5.22198 12.3217 6.15097C12.3655 6.15097 12.4113 6.14899 12.4571 6.14403C12.472 6.14171 12.4863 6.14004 12.5002 6.13841C12.516 6.13656 12.5313 6.13477 12.5466 6.13213C12.5536 6.13015 12.5615 6.13015 12.5685 6.13015C13.1079 6.04092 13.6074 5.72266 13.905 5.21504L13.903 5.21306C14.3159 4.50814 14.2194 3.64855 13.7318 3.05665C13.7209 3.04327 13.7094 3.03013 13.698 3.017C13.6865 3.00386 13.6751 2.99072 13.6641 2.97734C13.1327 2.36859 12.4949 1.83717 11.7585 1.41085C10.826 0.869516 9.82594 0.547294 8.81888 0.429312C8.68852 0.412457 8.55616 0.40056 8.42282 0.39362C8.26061 0.378748 8.10139 0.373791 7.94217 0.371808H7.94018C7.79833 0.370875 7.65668 0.373905 7.51538 0.380854V3.23036Z" fill="url(#paint2_linear_2034_119)" />
                 <defs>
-                    <filter id="filter0_d_2034_119" x="0.277771" y="2.15649" width="5.46375" height="10.6838" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                    <filter id="filter0_d_2034_119" x="0.277771" y="2.15649" width="5.46375" height="10.6838" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
                         <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                         <feOffset dx="0.39658" dy="-0.39658" />
                         <feGaussianBlur stdDeviation="0.19829" />
@@ -27,8 +27,8 @@ const LogoHeader = () => {
                         <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2034_119" />
                         <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2034_119" result="shape" />
                     </filter>
-                    <filter id="filter1_d_2034_119" x="10.0701" y="3.05768" width="5.4651" height="10.6829" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                    <filter id="filter1_d_2034_119" x="10.0701" y="3.05768" width="5.4651" height="10.6829" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
                         <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                         <feOffset dx="-0.39658" dy="0.39658" />
                         <feGaussianBlur stdDeviation="0.19829" />
@@ -38,19 +38,19 @@ const LogoHeader = () => {
                         <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2034_119" result="shape" />
                     </filter>
                     <linearGradient id="paint0_linear_2034_119" x1="1.74351" y1="3.26188" x2="14.1647" y2="3.26188" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#57A4F2" />
-                        <stop offset="0.25" stop-color="#8246FD" />
-                        <stop offset="0.91" stop-color="#FF1FDC" />
+                        <stop stopColor="#57A4F2" />
+                        <stop offset="0.25" stopColor="#8246FD" />
+                        <stop offset="0.91" stopColor="#FF1FDC" />
                     </linearGradient>
                     <linearGradient id="paint1_linear_2034_119" x1="1.64597" y1="12.6411" x2="14.0681" y2="12.6411" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#57A4F2" />
-                        <stop offset="0.25" stop-color="#8246FD" />
-                        <stop offset="0.91" stop-color="#FF1FDC" />
+                        <stop stopColor="#57A4F2" />
+                        <stop offset="0.25" stopColor="#8246FD" />
+                        <stop offset="0.91" stopColor="#FF1FDC" />
                     </linearGradient>
                     <linearGradient id="paint2_linear_2034_119" x1="1.69321" y1="3.26188" x2="14.1647" y2="3.26188" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#57A4F2" />
-                        <stop offset="0.25" stop-color="#8246FD" />
-                        <stop offset="0.91" stop-color="#FF1FDC" />
+                        <stop stopColor="#57A4F2" />
+                        <stop offset="0.25" stopColor="#8246FD" />
+                        <stop offset="0.91" stopColor="#FF1FDC" />
                     </linearGradient>
                 </defs>
             </svg>

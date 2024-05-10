@@ -45,6 +45,7 @@ comments.post('/', async (c) => {
         where: { postId: body.postId },
         select: { postId: true, channelId: true } // Only fetch the postId to check existence
     });
+    // console.log(postExists?.channelId);
 
     if (!postExists) {
         return c.json({ message: 'Post not found' }, 404);

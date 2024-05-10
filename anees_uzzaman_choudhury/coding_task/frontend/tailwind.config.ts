@@ -19,6 +19,7 @@ const config: Config = {
         customLightGray: '#8A8AA3',
         primaryPink: '#FE5BAC',
         primaryPurple: '#7047EB',
+        primaryOrange: '#FF7D52'
       },
       gap: {
         'custom': '0.5rem var(--spacing-2, 0.5rem)',

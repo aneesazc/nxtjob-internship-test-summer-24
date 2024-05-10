@@ -1,15 +1,16 @@
+import GetPosts from "@/Hooks/GetPosts";
 import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
 import TopView from "@/components/TopView";
 
-
-export default function Introduction() {
+export default async function Introduction() {
   return (
     <div>
-      <NavBar headingVal={`Introduction`} />
+      <GetPosts />
+      <NavBar headingVal="Introduction" />
       <div className="flex">
         <SideBar />
-        <TopView />
+        <TopView headingVal="Introduction"/>
       </div>
     </div>
   );

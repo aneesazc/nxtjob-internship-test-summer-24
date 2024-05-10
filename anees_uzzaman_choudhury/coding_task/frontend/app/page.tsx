@@ -6,10 +6,10 @@ import TopView from "@/components/TopView";
 export default function Home() {
   return (
     <div>
-      <NavBar headingVal={`Career Discussions`} />
+      <NavBar headingVal="Career Discussions" />
       <div className="flex">
         <SideBar />
-        <TopView />
+        <TopView headingVal="Career Discussions"/>
       </div>
     </div>
   );
