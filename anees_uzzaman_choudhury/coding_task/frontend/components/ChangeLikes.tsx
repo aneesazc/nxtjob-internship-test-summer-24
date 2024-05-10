@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 const ChangeLikes = ({ post }: {post: any}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(post.likes);
+  const [likes, setLikes] = useState(post?.likes);
   const [isLoading, setIsLoading] = useState(false);
 
   const toggleLike = async () => {

@@ -36,9 +36,43 @@ posts.post("/", async (c) => {
 
   try {
     const post = await prisma.post.create({
-      data: body,
-    });
-    return c.json({ postId: post.postId, message: "Post created" }, 201);
+        data: body,
+        include: {
+          User: {
+            select: {
+              username: true,  // Select only the username from the User relation
+            }
+          },
+          Comments: true,  // Include all comments (You might want to specify fields here as well)
+          LikedBy: {
+            select: {
+              userId: true  // Include UserLikes data (adjust according to your needs)
+            }
+          }
+        }
+      });
+
+      const postResponse = {
+        postId: post.postId,
+        userId: post.userId,
+        channelId: post.channelId,
+        content: post.content,
+        attachment: post.attachment,
+        tagId: post.tagId,
+        createdAt: post.createdAt,
+        updatedAt: post.updatedAt,
+        username: post.User.username,
+        Comments: post.Comments.map(comment => ({
+          commentId: comment.commentId,
+          content: comment.content,
+          fromUserId: comment.fromUserId,
+          likes: comment.likes,
+          createdAt: comment.createdAt,
+          updatedAt: comment.updatedAt
+        })),
+        likes: post.LikedBy.length  // Assuming you want to count the number of likes
+      };
+    return c.json({ ...postResponse, message: "Post created" }, 201);
   } catch (error) {
     console.error("Failed to create post:", error);
     return c.json({ message: "Error creating post" }, 500);

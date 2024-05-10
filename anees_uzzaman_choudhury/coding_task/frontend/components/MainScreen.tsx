@@ -6,6 +6,7 @@ import ChangeLikes from "./ChangeLikes";
 
 const MainScreen = () => {
   const posts = useAppSelector(state => state.posts.posts);
+  console.log(posts);
   const dispatch = useAppDispatch();
 
   return (
@@ -31,17 +32,17 @@ const MainScreen = () => {
       <hr className="h-px my-1 sm:my-2 bg-gray-200 border-0"></hr>
       <main className="flex-grow py-1 sm:py-2">
         {posts.map((post) => (
-          <div key={post.userId} className="p-3 sm:p-4 bg-white border shadow rounded-lg mb-3 sm:mb-5">
+          <div key={`${post?.userId}-${post?.postId}`} className="p-3 sm:p-4 bg-white border shadow rounded-lg mb-3 sm:mb-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <div className='bg-primaryOrange w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white text-xs sm:text-sm'>
-                  {post.username?.charAt(0).toUpperCase()}
+                  {post?.username?.charAt(0)?.toUpperCase()}
                 </div>
-                <h2 className="text lg sm:text-xl font-medium ml-2">{post.username}</h2>
+                <h2 className="text lg sm:text-xl font-medium ml-2">{post?.username}</h2>
               </div>
               <span className="text-xs sm:text-sm text-gray-500">11/16/2021 8:14 AM</span>
             </div>
-            <p className="text-base sm:text-lg">{post.content}</p>
+            <p className="text-base sm:text-lg">{post?.content}</p>
             <div className="flex justify-between items-center mt-4">
               <div className="flex items-center space-x-4">
                 <ChangeLikes post={post} />
