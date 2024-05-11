@@ -19,9 +19,41 @@ const GetPosts = ({channelId}: {channelId: string}) => {
     };
 
     fetchPosts();
-  }, [dispatch]);
+}, [dispatch]);
 
-  return <></>;
+return <></>;
 };
 
 export default GetPosts;
+
+
+
+
+
+
+
+// import { fetchPostsByChannel, setPosts } from '@/lib/features/posts/postSlice';
+// import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+// import React, { useEffect } from 'react';
+
+// const GetPosts = ({ channelId }: { channelId: string }) => {
+//   const dispatch = useAppDispatch();
+//   const postsStatus = useAppSelector(state => state.posts.status);
+//   const postsError = useAppSelector(state => state.posts.error);
+
+//   useEffect(() => {
+//     dispatch(fetchPostsByChannel(channelId));
+//   }, [channelId, dispatch]);
+
+//   // You can render a loading indicator or error message based on the posts status or error
+//   if (postsStatus === 'loading') {
+//     return <p>Loading posts...</p>;
+//   }
+
+//   if (postsError) {
+//     return <p>Error fetching posts: {postsError}</p>;
+//   }
+//   return null; // or your actual component that requires the posts data
+// };
+
+// export default GetPosts;

@@ -12,7 +12,7 @@ import LoginModal from "@/framer/LoginModal";
 
 const MainScreen = () => {
   const posts = useAppSelector(state => state.posts.filteredPosts);
-  console.log(posts);
+  // console.log(posts);
   const dispatch = useAppDispatch();
   const selectedTag = useAppSelector(state => state.posts.selectedTag);
 

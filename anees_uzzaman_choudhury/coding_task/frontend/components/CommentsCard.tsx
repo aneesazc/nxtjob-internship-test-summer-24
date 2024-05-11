@@ -1,6 +1,9 @@
+"use client";
 import React from 'react';
 
 const CommentsCard = ({ comment }: { comment: any }) => {
+    
+
     return (
         <>
             <div className="bg-gray-100 p-3 rounded-lg shadow mb-2">

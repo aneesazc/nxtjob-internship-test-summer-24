@@ -1,6 +1,15 @@
 // features/posts/postSlice.js
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
+interface Comment {
+  commentId: string;
+  content: string;
+  fromUserId: string;
+  createdAt: string;
+  User: {
+    username: string;
+  };
+}
 
 interface Post {
   postId: string;
@@ -22,18 +31,6 @@ interface PostState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: any
 }
-
-export const fetchPosts = createAsyncThunk(
-  'posts/fetchPosts',
-  async (channelId, thunkAPI) => {
-    try {
-      const response = await axios.get(`http://127.0.0.1:8787/api/v1/posts/${channelId}`);
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue('Failed to fetch posts');
-    }
-  }
-);
 
 const initialState: PostState = {
   posts: [],
@@ -64,31 +61,25 @@ const postsSlice = createSlice({
       state.filteredPosts = state.posts.filter(post => 
         action.payload === '' || post.tagId.includes(action.payload));
     },
-    commentAdded(state, action) {
+    commentAdded(state, action: PayloadAction<{ postId: string; comment: Comment }>) {
       const { postId, comment } = action.payload;
-      const existingPost = state.posts.find(post => post.postId === postId);
-      if (existingPost) {
-          if (!existingPost.Comments) {
-              existingPost.Comments = [];
-          }
-          existingPost.Comments.push(comment);
-      }
-  }
+      // Helper function to add comment to a post in an array
+      const addCommentToPosts = (postsArray: Post[]) => {
+        const existingPost = postsArray.find(post => post.postId === postId);
+        if (existingPost) {
+            if (!existingPost.Comments) {
+                existingPost.Comments = [];
+            }
+            existingPost.Comments.push(comment);
+        }
+      };
+    
+      // Update both posts and filteredPosts arrays
+      addCommentToPosts(state.posts);
+      addCommentToPosts(state.filteredPosts);
+    },
+  
 
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchPosts.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchPosts.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.posts = action.payload;
-      })
-      .addCase(fetchPosts.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
-      });
   }
 });
 
