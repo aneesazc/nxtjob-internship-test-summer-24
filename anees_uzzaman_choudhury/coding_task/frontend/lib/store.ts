@@ -7,6 +7,8 @@ export const makeStore = () => {
         reducer: {
             posts: postsReducer,
         },
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware().concat(/* other middleware */)
     });
 };
 

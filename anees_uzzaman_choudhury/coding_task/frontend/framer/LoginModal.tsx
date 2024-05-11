@@ -67,7 +67,7 @@ const LoginModal = ({
 
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
+                placeholder="Enter your username or use username: Anonymous"
                 className="w-full py-2 px-3 border rounded mb-4 text-indigo-600"
               />
               <div className="flex gap-2">

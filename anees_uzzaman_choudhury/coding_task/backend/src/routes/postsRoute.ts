@@ -99,6 +99,9 @@ posts.get("/:channelId", async (c) => {
         content: true,
         userId: true,
         channelId: true,
+        tagId: true,
+        createdAt: true,
+        updatedAt: true,
         User: {
           select: {
             username: true,
@@ -110,6 +113,11 @@ posts.get("/:channelId", async (c) => {
             content: true,
             fromUserId: true,
             createdAt: true,
+            User: {
+                select: {
+                    username: true
+                }
+            }
           },
         },
         _count: {

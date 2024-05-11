@@ -59,9 +59,20 @@ comments.post('/', async (c) => {
                 fromUserId: body.userId,
                 content: body.content,
                 channelId: postExists.channelId
+            },
+            select: {
+                commentId: true,
+                content: true,
+                fromUserId: true,
+                createdAt: true,
+                User: {
+                    select: {
+                        username: true
+                    }
+                }
             }
         });
-        return c.json({ id: comment.commentId, message: 'Comment created' }, 201);
+        return c.json({ ...comment, message: 'Comment created' }, 201);
     } catch (error) {
         console.error("Failed to create comment:", error);
         return c.json({ message: 'Error creating comment' }, 500);

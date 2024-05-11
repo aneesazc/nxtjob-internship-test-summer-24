@@ -20,11 +20,16 @@ const PostDialog = ({ open, setOpen }: { open: any, setOpen: any }) => {
   const options = [
     { id: 'product', label: 'Product' },
     { id: 'webinar', label: 'Webinar' },
-    { id: 'announcement', label: 'Announcement' },
-    { id: 'career', label: 'Career Discussions' }
+    { id: 'technology', label: 'Technology' },
+    { id: 'productivity', label: 'Productivity' }
   ];
   const handleOptionClick = (optionId: string) => {
-    setSelectedOption(optionId);
+    // If the selected option is clicked again, unselect it; otherwise, select the new one.
+    if (selectedOption === optionId) {
+      setSelectedOption(''); // Clear the selection
+    } else {
+      setSelectedOption(optionId); // Set the new selected option
+    }
   };
 
   const createPostHandler = async () => {
@@ -33,7 +38,7 @@ const PostDialog = ({ open, setOpen }: { open: any, setOpen: any }) => {
       const response = await axios.post(`http://127.0.0.1:8787/api/v1/posts`, {
         content: content,
         channelId: pathname.slice(1),
-        tagId: [selectedOption || null],
+        tagId: [selectedOption || "All"],
         userId: userId
       });
       if (response.data.message === 'Post created') {

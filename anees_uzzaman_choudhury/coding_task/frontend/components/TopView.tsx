@@ -9,8 +9,8 @@ const TopView = ({ headingVal }: { headingVal: string }) => {
     const [dialogOpen, setDialogOpen] = useState(false);
 
 
-const  handleLoginModal = () => {
-    const userId = localStorage.getItem('userId'); // Retrieve userId from local storage
+    const handleLoginModal = () => {
+        const userId = localStorage.getItem('userId'); // Retrieve userId from local storage
         if (!userId) {
             console.error('No user ID found, user must be logged in to like posts');
             setIsOpen(true);
@@ -19,11 +19,12 @@ const  handleLoginModal = () => {
         else {
             setDialogOpen(true)
         }
-}
+    }
 
 
     return (
         <div className='bg-gray-100 flex justify-center w-full'>
+            
             <div className='flex flex-col w-full max-w-4xl bg-white lg:ml-48 text-left pl-8'>
                 <div>
                     < svg className='hidden md:block' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" >
@@ -45,7 +46,7 @@ const  handleLoginModal = () => {
                         className="py-2 px-4 bg-gray-100 rounded-3xl text-gray-400 font-semibold shadow-md hover:bg-lightPurple hover:text-gray-700 w-full mx-2"
                         onClick={() =>
                             handleLoginModal()
-                            
+
                         }
                     >
                         Start a post
