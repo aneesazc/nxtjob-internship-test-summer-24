@@ -1,4 +1,5 @@
 "use client"
+import axios from "axios";
 import Link from "next/link";
 import { usePathname } from 'next/navigation'
 import React, { useState, useEffect, useRef } from "react";
@@ -7,6 +8,39 @@ const SideBar = () => {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false);
   const sidebarRef = useRef<HTMLElement | null>(null);
+  const [channelCounts, setChannelCounts] = useState({
+    introduction: 0,
+    announcements: 0,
+    success: 0,
+    career: 0,
+  });
+
+  useEffect(() => {
+    // Function to fetch the latest counts
+    const fetchChannelCounts = async () => {
+      try {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+          console.error('No user ID found, user must be logged in to fetch channel counts');
+          return;
+        }
+        const response = await axios.get('http://127.0.0.1:8787/api/v1/counts', {
+          params: {
+            userId: userId
+          }
+        });
+        setChannelCounts(response.data);
+      } catch (error) {
+        console.error('Failed to fetch channel counts:', error);
+      }
+    };
+
+    // Fetch counts initially and set up polling
+    fetchChannelCounts();
+    const intervalId = setInterval(fetchChannelCounts, 10000); // Poll every 10 seconds
+
+    return () => clearInterval(intervalId); // Clean up on component unmount
+  }, []);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -46,42 +80,34 @@ const SideBar = () => {
         <div className="h-full px-3 py-4 overflow-y-auto bg-white">
           <ul className="space-y-2 font-medium">
             <li>
-              <Link href="#" className="flex items-center p-2 text-black rounded-lg hover:bg-gray-100 group">
-                <span className="ms-3">Rules</span>
-              </Link>
-            </li>
-            <li>
               <Link href="introduction" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/introduction' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
-
-                <span className="flex-1 ms-3 whitespace-nowrap">Introduction</span>
-                <span className="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span>
+                Introduction <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">{channelCounts.introduction}</span>
               </Link>
             </li>
             <li>
+
               <Link href="/announcements" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/announcements' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
 
-                <span className="flex-1 ms-3 whitespace-nowrap">Announcements</span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">3</span>
+                Announcements <span className="count"></span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">{channelCounts.announcements > 0 && channelCounts.announcements}</span>
               </Link>
             </li>
             <li>
               <Link href="/success" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/success' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
 
-                <span className="flex-1 ms-3 whitespace-nowrap">Success Stories</span>
+                <span className="count">Success Stories</span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">{channelCounts.success > 0 && channelCounts.success}</span>
               </Link>
             </li>
             <li>
-              <Link href="/" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
+              <Link href="/career" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
 
-                <span className={`flex-1 ms-3 whitespace-nowrap link `}>Career Discussions</span>
+                <span className="count">Career Discussions</span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">{channelCounts.career > 0 && channelCounts.success}</span>
+
               </Link>
             </li>
-            <li>
-              <Link href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100  group">
 
-                <span className="flex-1 ms-3 whitespace-nowrap">Sign Up</span>
-              </Link>
-            </li>
           </ul>
         </div>
       </aside>

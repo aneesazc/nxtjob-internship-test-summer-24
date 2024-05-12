@@ -44,13 +44,10 @@ const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    addPost: (state, action: PayloadAction<any>) => {
-      // Assume action.payload contains the entire new post object
-      state.posts.push(action.payload);
-    },
     postAdded(state, action: PayloadAction<any>) {
       // Correct immutable update
       state.posts = [action.payload, ...state.posts];
+      state.filteredPosts = [action.payload, ...state.filteredPosts];
     },
     setPosts(state, action) {
       state.posts = action.payload;
@@ -84,6 +81,6 @@ const postsSlice = createSlice({
 });
 
 // Export actions
-export const { addPost, setPosts, postAdded, selectTag, commentAdded } = postsSlice.actions;
+export const { setPosts, postAdded, selectTag, commentAdded } = postsSlice.actions;
 
 export default postsSlice.reducer;

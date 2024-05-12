@@ -31,6 +31,7 @@ model User {
   Posts      Post[]
   Comments   Comment[]
   Likes      UserLikes[]  // Relations to UserLikes join table
+  bookmarks    String[]  @default([])  // Array of postIds that are bookmarked
 }
 
 model UserLikes {
@@ -54,4 +55,6 @@ model Comment {
   Post       Post     @relation(fields: [postId], references: [postId])
   User       User     @relation(fields: [fromUserId], references: [userId])
 }
+
+
 

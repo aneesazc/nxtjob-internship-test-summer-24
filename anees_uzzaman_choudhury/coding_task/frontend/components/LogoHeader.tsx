@@ -3,7 +3,7 @@
 const LogoHeader = () => {
     return (
         <div 
-        className="flex h-[var(--spacing-16,4rem)] p-[0.625rem var(--spacing-6,1.5rem)] items-center gap-[var(--spacing-2,0.5rem)] flex-shrink-0 self-stretch bg-[#14003D] text-white text-xl font-semibold"
+        className="sm:fixed flex h-[var(--spacing-16,4rem)] p-[0.625rem var(--spacing-6,1.5rem)] items-center gap-[var(--spacing-2,0.5rem)] flex-shrink-0 self-stretch bg-[#14003D] text-white text-xl font-semibold"
         >
             <span className="pl-4 mr-[-8px]">nxtj</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">

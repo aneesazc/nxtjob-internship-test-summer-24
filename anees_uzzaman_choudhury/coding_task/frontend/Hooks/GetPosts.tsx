@@ -12,7 +12,7 @@ const GetPosts = ({channelId}: {channelId: string}) => {
       try {
         const response = await axios.get(`http://127.0.0.1:8787/api/v1/posts/${channelId}`);
         dispatch(setPosts(response.data)); // Dispatch the setPosts action with the fetched data
-        console.log('Posts fetched:', response.data);
+        // console.log('Posts fetched:', response.data);
       } catch (error) {
         console.error('Failed to fetch posts:', error);
       }

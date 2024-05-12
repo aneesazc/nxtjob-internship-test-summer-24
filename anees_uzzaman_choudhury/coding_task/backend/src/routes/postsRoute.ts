@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { getCookie } from "hono/cookie";
+
 
 const posts = new Hono<{
   Bindings: {
@@ -72,6 +72,7 @@ posts.post("/", async (c) => {
         })),
         likes: post.LikedBy.length  // Assuming you want to count the number of likes
       };
+      // Broadcasting the new post to all connected clients
     return c.json({ ...postResponse, message: "Post created" }, 201);
   } catch (error) {
     console.error("Failed to create post:", error);
@@ -80,67 +81,67 @@ posts.post("/", async (c) => {
 });
 
 posts.get("/:channelId", async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env?.DATABASE_URL,
-  }).$extends(withAccelerate());
-
-  const { channelId } = c.req.param();
-
-  try {
-    const posts = await prisma.post.findMany({
-      where: {
-        channelId: channelId, // Filter posts by channelId
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      select: {
-        postId: true,
-        content: true,
-        userId: true,
-        channelId: true,
-        tagId: true,
-        createdAt: true,
-        updatedAt: true,
-        User: {
-          select: {
-            username: true,
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env?.DATABASE_URL,
+    }).$extends(withAccelerate());
+  
+    const { channelId } = c.req.param();
+  
+    try {
+      const posts = await prisma.post.findMany({
+        where: {
+          channelId: channelId, // Filter posts by channelId
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          postId: true,
+          content: true,
+          userId: true,
+          channelId: true,
+          tagId: true,
+          createdAt: true,
+          updatedAt: true,
+          User: {
+            select: {
+              username: true,
+            },
+          },
+          Comments: {
+            select: {
+              commentId: true,
+              content: true,
+              fromUserId: true,
+              createdAt: true,
+              User: {
+                  select: {
+                      username: true
+                  }
+              }
+            },
+          },
+          _count: {
+            // Use the `_count` property to get aggregation results
+            select: {
+              LikedBy: true, // Count the likes by referring to the relation name
+            },
           },
         },
-        Comments: {
-          select: {
-            commentId: true,
-            content: true,
-            fromUserId: true,
-            createdAt: true,
-            User: {
-                select: {
-                    username: true
-                }
-            }
-          },
-        },
-        _count: {
-          // Use the `_count` property to get aggregation results
-          select: {
-            LikedBy: true, // Count the likes by referring to the relation name
-          },
-        },
-      },
-    });
-    const formattedPosts = posts.map((post) => ({
-      ...post,
-      username: post.User.username,
-      likes: post._count.LikedBy, // Access the count of likes from the aggregation result
-      Comments: post.Comments,
-    }));
-
-    return c.json(formattedPosts, 200);
-  } catch (error) {
-    console.error("Failed to fetch posts:", error);
-    return c.json({ message: "Error fetching posts" }, 500);
-  }
-});
+      });
+      const formattedPosts = posts.map((post) => ({
+        ...post,
+        username: post.User.username,
+        likes: post._count.LikedBy, // Access the count of likes from the aggregation result
+        Comments: post.Comments,
+      }));
+  
+      return c.json(formattedPosts, 200);
+    } catch (error) {
+      console.error("Failed to fetch posts:", error);
+      return c.json({ message: "Error fetching posts" }, 500);
+    }
+  });
 
 // get all comments for a specific post
 posts.get("/:postId/comments", async (c) => {

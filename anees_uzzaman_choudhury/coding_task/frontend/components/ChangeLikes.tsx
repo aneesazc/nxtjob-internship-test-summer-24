@@ -2,8 +2,10 @@
 import LoginModal from '@/framer/LoginModal';
 import axios from 'axios';
 import React, { useState } from 'react';
+import { IoIosHeartEmpty } from "react-icons/io";
+import { IoIosHeart } from "react-icons/io";
 
-const ChangeLikes = ({ post }: {post: any}) => {
+const ChangeLikes = ({ post }: { post: any }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(post?.likes);
@@ -44,8 +46,8 @@ const ChangeLikes = ({ post }: {post: any}) => {
   };
 
   return (
-    <button onClick={toggleLike} disabled={isLoading} className="text-xs sm:text-sm text-gray-500" aria-pressed={liked}>
-      {likes} Likes
+    <button onClick={toggleLike} disabled={isLoading} className="flex items-center text-xs sm:text-sm text-gray-500" aria-pressed={liked}>
+      {(likes || liked) ? <IoIosHeart className='text-red-500 w-4 h-4 sm:w-5 sm:h-5'/>: <IoIosHeartEmpty className='text-gray-400 w-4 h-4 sm:w-5 sm:h-5' />} <span className='m-1 sm:text-lg text-gray-400'>{likes}</span>
       <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </button>
   );

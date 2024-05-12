@@ -3,16 +3,18 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import React, { useEffect, useState } from "react";
 import { FaRegCommentDots } from "react-icons/fa";
 import { CiCirclePlus } from "react-icons/ci";
+import { BookmarkFilledIcon, BookmarkIcon } from '@radix-ui/react-icons'
 import ChangeLikes from "./ChangeLikes";
 import { useSpring, useScroll, motion } from "framer-motion"
 import { commentAdded, selectTag } from "@/lib/features/posts/postSlice";
 import CommentsCard from "./CommentsCard";
 import axios from "axios";
 import LoginModal from "@/framer/LoginModal";
+import BookmarkButton from "@/Hooks/AddBookmarks";
 
 const MainScreen = () => {
   const posts = useAppSelector(state => state.posts.filteredPosts);
-  // console.log(posts);
+  console.log(posts);
   const dispatch = useAppDispatch();
   const selectedTag = useAppSelector(state => state.posts.selectedTag);
 
@@ -127,7 +129,7 @@ const MainScreen = () => {
           {option.label}
         </button>
       ))}
-      <button onClick={() => dispatch(selectTag(''))} className="bg-lightPurple text-primaryPurple p-2 rounded">Clear Filter</button>
+      <button onClick={() => dispatch(selectTag(''))} className="bg-gray-100 text-gray-900 p-2 rounded">Clear Filter</button>
       </div>
       <hr className="h-px my-1 sm:my-2 bg-gray-200 border-0"></hr>
       <main className="flex-grow py-1 sm:py-2">
@@ -143,16 +145,16 @@ const MainScreen = () => {
             <span className="text-xs sm:text-sm text-gray-500">{new Date(post.createdAt).toLocaleDateString()} {new Date(post.createdAt).toLocaleTimeString()}</span>
           </div>
           <p className="text-base sm:text-lg">{post.content}</p>
-          <div className="flex justify-between items-center mt-4">
+          <div className="flex justify-between items-center mt-0 ml-1">
             <div className="flex items-center space-x-4">
               <ChangeLikes post={post} />
               <div className="flex items-center cursor-pointer" onClick={() => toggleComments(post.postId)}>
-                <FaRegCommentDots className="mr-1 w-3 h-3 sm:w-4 sm:h-4" />
+                <FaRegCommentDots className="mr-1 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
                 <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
-                <span className="text-xs sm:text-sm text-gray-500">{post.Comments.length}</span>
+                <span className="sm:text-lg text-gray-400">{post.Comments.length}</span>
               </div>
             </div>
-            <button className="text-blue-500">Save</button>
+            <BookmarkButton postId={post.postId} />
           </div>
           {/* Conditionally render the comments for the active post */}
           {activePostId === post.postId && (
@@ -170,7 +172,7 @@ const MainScreen = () => {
                       placeholder="Write a comment..."
                       className="w-full p-2 border rounded"
                     />
-                    <button onClick={() => handleAddComment(post.postId)} className="py-2 px-4 bg-blue-500 text-white rounded mt-2">
+                    <button onClick={() => handleAddComment(post.postId)} className="py-1 px-3 bg-primaryPink text-white rounded-lg mt-2">
                       Submit
                     </button>
                   </div>

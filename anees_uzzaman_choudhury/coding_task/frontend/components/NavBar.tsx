@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import LogoHeader from './LogoHeader'
 import { MagnifyingGlassIcon, BookmarkIcon, BellIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons'
 import LoginModal from '@/framer/LoginModal'
+import Link from 'next/link';
 
 const NavBar = ({headingVal}: {headingVal: string}) => {
     const [isOpen, setIsOpen] = useState(false)
@@ -28,8 +29,8 @@ const NavBar = ({headingVal}: {headingVal: string}) => {
                                 <MagnifyingGlassIcon className="w-6 h-6 text-gray-500" />
                             </div>
                         </div>
-
-                        <BookmarkIcon className="ml-3 w-6 h-6" />
+                        <Link href={'/bookmarks'}><BookmarkIcon className="ml-3 w-6 h-6" /></Link>
+                        
                         <BellIcon className="ml-2 w-6 h-6" />
                         <button onClick={() => setIsOpen(true)}>
                             <QuestionMarkCircledIcon className="ml-2 w-6 h-6 hidden sm:inline-block" />

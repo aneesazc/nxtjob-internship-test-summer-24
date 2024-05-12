@@ -72,6 +72,8 @@ comments.post('/', async (c) => {
                 }
             }
         });
+        // clients.add(comment)
+
         return c.json({ ...comment, message: 'Comment created' }, 201);
     } catch (error) {
         console.error("Failed to create comment:", error);

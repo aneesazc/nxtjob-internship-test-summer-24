@@ -1,14 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import postsReducer from './features/posts/postSlice';
+import bookmarksReducer from './features/bookmarks/bookmarksSlice'
 
 // Function to create a new store instance
 export const makeStore = () => {
     return configureStore({
         reducer: {
             posts: postsReducer,
+            bookmarks: bookmarksReducer
         },
         middleware: (getDefaultMiddleware) =>
-            getDefaultMiddleware().concat(/* other middleware */)
+            getDefaultMiddleware().concat()
     });
 };
 
