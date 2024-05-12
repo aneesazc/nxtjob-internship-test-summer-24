@@ -15,6 +15,13 @@ const SideBar = () => {
     career: 0,
   });
 
+  const handleLogout = () => {
+
+    if (localStorage.getItem('userId')) {
+      localStorage.removeItem('userId'); // Remove userId from localStorage
+    }
+  };
+
   useEffect(() => {
     // Function to fetch the latest counts
     const fetchChannelCounts = async () => {
@@ -108,7 +115,9 @@ const SideBar = () => {
               </Link>
             </li>
             <li>
-              <button className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link `}>
+              <button className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link `}
+               onClick={handleLogout}
+              >
 
                 <span className="count pr-20">Log out</span>
 
