@@ -55,7 +55,7 @@ const LogoHeader = () => {
                 </defs>
             </svg>
             <span className="ml-[-8px]">b.ai</span>
-            <span className='ml-2 tex-sm font-normal pr-4'>Community</span>
+            <span className='hidden sm:block ml-2 tex-sm font-normal pr-4'>Community</span>
 
         </div>
 
