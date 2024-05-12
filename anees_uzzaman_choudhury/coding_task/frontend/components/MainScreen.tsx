@@ -12,6 +12,7 @@ import axios from "axios";
 import LoginModal from "@/framer/LoginModal";
 import BookmarkButton from "@/Hooks/AddBookmarks";
 import toast from "react-hot-toast";
+export const dynamic = 'force-dynamic'
 
 const MainScreen = () => {
   const dispatch = useAppDispatch();
