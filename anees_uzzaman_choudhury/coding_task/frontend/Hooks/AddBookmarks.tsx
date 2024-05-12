@@ -41,10 +41,9 @@ const BookmarkButton = ({ postId }: { postId: string }) => {
   
       try {
         const url = `https://backend.anees-azc.workers.dev/api/v1/users/${userId}/bookmark/${postId}`;
-        // Toggle based on the current state
-        // const method = isBookmarked ? 'delete' : 'post';
+
         await axios.post(url);
-        setIsBookmarked(!isBookmarked);  // Update the state to reflect the change
+        setIsBookmarked(!isBookmarked); 
         console.log('Bookmark toggled:', !isBookmarked);
       } catch (error) {
         console.error('Failed to toggle bookmark:', error);

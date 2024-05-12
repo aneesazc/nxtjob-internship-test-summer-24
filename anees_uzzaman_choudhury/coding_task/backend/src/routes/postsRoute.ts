@@ -72,7 +72,6 @@ posts.post("/", async (c) => {
         })),
         likes: post.LikedBy.length  // Assuming you want to count the number of likes
       };
-      // Broadcasting the new post to all connected clients
     return c.json({ ...postResponse, message: "Post created" }, 201);
   } catch (error) {
     console.error("Failed to create post:", error);
@@ -230,75 +229,5 @@ posts.post("/:postId/like", async (c) => {
     );
   }
 });
-
-// Unlike a post
-// posts.delete('/:postId/like', async (c) => {
-//     const prisma = new PrismaClient({
-//         datasourceUrl: c.env?.DATABASE_URL,
-//     }).$extends(withAccelerate())
-
-//     const { postId } = c.req.param();
-
-//     if (!postId.trim()) {
-//         return c.json({ message: 'PostId is required' }, 400);
-//     }
-
-//     try {
-//         const post = await prisma.post.findUnique({
-//             where: { postId }
-//         });
-
-//         if (!post) {
-//             return c.json({ message: 'Post not found' }, 404);
-//         }
-
-//         const unlikedPost = await prisma.post.update({
-//             where: { postId },
-//             data: {
-//                 likes: {
-//                     decrement: 1
-//                 }
-//             }
-//         });
-//         // add a field of message: unliked to unlikedPost reposnse
-//         const editedPost = { ...unlikedPost, message: "unliked" };
-
-//         return c.json(editedPost, 200);
-//     } catch (error) {
-//         console.error("Failed to unlike post:", error);
-//         return c.json({ message: 'Error unliking post' }, 500);
-//     }
-// });
-
-// test endpoint
-// posts.get('/test', async (c) => {
-//     const prisma = new PrismaClient({
-//         datasourceUrl: c.env?.DATABASE_URL,
-//     }).$extends(withAccelerate())
-
-//     try {
-//         const posts = await prisma.post.findMany({
-//             select: {
-//                 postId: true,
-//                 content: true,
-//                 userId: true,
-//                 channelId: true,
-//                 likes: true,
-//                 Comments: {
-//                     select: {
-//                         commentId: true,
-//                         content: true,
-//                         fromUserId: true,
-//                         createdAt: true,
-//                     }
-//                 },
-//             }});
-//         console.log(posts);
-//         return c.json(posts, 200);
-//     } catch (error) {
-//         console.error("Error fetching posts with comments:", error);
-//     }
-
-// })
 
 export default posts;

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import PostDialog from './PostDialog';
-import MainScreen from './MainScreen';// Make sure the path matches where your PostDialog component is located
+import MainScreen from './MainScreen';
 import LoginModal from '@/framer/LoginModal';
 
 const TopView = ({ headingVal }: { headingVal: string }) => {
@@ -10,7 +10,7 @@ const TopView = ({ headingVal }: { headingVal: string }) => {
 
 
     const handleLoginModal = () => {
-        const userId = localStorage.getItem('userId'); // Retrieve userId from local storage
+        const userId = localStorage.getItem('userId'); 
         if (!userId) {
             console.error('No user ID found, user must be logged in to like posts');
             setIsOpen(true);

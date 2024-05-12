@@ -18,7 +18,7 @@ const GetPosts = ({ channelId }: { channelId: string }) => {
   if (isFetching) return <div></div>;
   if (error) return <div>Failed to load posts</div>;
 
-  return null;  // Render nothing or any placeholder as needed
+  return null; 
 };
 
 export default GetPosts;

@@ -33,8 +33,6 @@ const ChangeLikes = ({ post }: { post: any }) => {
         setLikes(likes);
         setLiked(liked);
       } else {
-        // Optionally update likes count based on response if necessary
-        // setLikes(response.data.newLikeCount); // If the server sends back the new count
       }
     } catch (error) {
       console.error('Failed to toggle like:', error);

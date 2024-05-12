@@ -55,22 +55,3 @@ app.get('/api/v1/counts', async (c) => {
 
 
 export default app
-
-
-// Posts Management
-// POST /api/v1/posts        // Create a new post
-// GET /api/v1/posts         // Get all posts with optional filtering by category
-
-// Comments Management
-// POST /api/v1/comments     // Create a new comment on a post
-// GET /api/v1/posts/{postId}/comments // Get all comments for a specific post
-
-// User Management
-// POST /api/v1/users         // Create a new user or login if user already exists
-
-// Likes Management
-// POST /api/v1/posts/{postId}/like   // Like a post
-// DELETE /api/v1/posts/{postId}/like // Unlike a post
-
-// Real-Time Updates
-// WebSocket /updates   // WebSocket endpoint for real-time updates

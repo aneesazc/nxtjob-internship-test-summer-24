@@ -44,9 +44,9 @@ const SideBar = () => {
 
     // Fetch counts initially and set up polling
     fetchChannelCounts();
-    const intervalId = setInterval(fetchChannelCounts, 10000); // Poll every 20 seconds
+    const intervalId = setInterval(fetchChannelCounts, 10000); // Poll every 10 seconds
 
-    return () => clearInterval(intervalId); // Clean up on component unmount
+    return () => clearInterval(intervalId); 
   }, []);
 
   const toggleSidebar = () => {

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { RootState } from '@/lib/store';
 import { fetchBookmarksFailure, fetchBookmarksStart, fetchBookmarksSuccess } from '@/lib/features/bookmarks/bookmarksSlice';
 import Link from 'next/link';
 

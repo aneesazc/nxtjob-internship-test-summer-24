@@ -1,7 +1,6 @@
 import { Hono } from "hono"
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { setCookie, getCookie } from 'hono/cookie'
 
 const users = new Hono<{
     Bindings: {
@@ -100,7 +99,7 @@ users.get('/:userId/bookmarks', async (c) => {
     const user = await prisma.user.findUnique({
         where: { userId },
         select: {
-          bookmarks: true  // Assuming bookmarks is an array of postId strings
+          bookmarks: true  
         }
       });
     
@@ -113,8 +112,8 @@ users.get('/:userId/bookmarks', async (c) => {
           postId: { in: user.bookmarks }
         },
         include: {
-          User: true,  // Include User details if needed
-          Comments: true  // Include Comments if needed
+          User: true,  
+          Comments: true  
         }
       });
 

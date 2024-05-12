@@ -72,7 +72,6 @@ comments.post('/', async (c) => {
                 }
             }
         });
-        // clients.add(comment)
 
         return c.json({ ...comment, message: 'Comment created' }, 201);
     } catch (error) {
@@ -82,10 +81,3 @@ comments.post('/', async (c) => {
 });
 
 export default comments;
-
-
-// populate the comments table
-// { postId, userId, content }
-// "postId": "1",
-// "userId": "1",
-// "content": "This is a comment"

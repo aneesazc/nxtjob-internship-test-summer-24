@@ -71,7 +71,7 @@ const PostDialog = ({ open, setOpen }: { open: any, setOpen: any }) => {
 
           <textarea className="p-2 lg:p-4 rounded w-full mt-4 h-[55%] resize-none focus:outline-none focus:ring-2 focus:ring-primaryPurple focus:ring-opacity-50"
             placeholder="What's on your mind?"
-            value={content}  // Bind the textarea to the state
+            value={content} 
             onChange={(e) => setContent(e.target.value)}
           ></textarea>
           <div className="flex p-3 items-center content-center gap-custom self-stretch flex-wrap bg-white">
