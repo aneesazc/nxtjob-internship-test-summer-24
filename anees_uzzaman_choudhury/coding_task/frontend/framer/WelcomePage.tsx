@@ -1,117 +1,39 @@
 "use client";
-import React, { useRef } from "react";
-import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
+import Link from 'next/link';
 
-export const WelcomePage = () => {
-  return (
-    <>
-      <div className="relative h-fit bg-indigo-50">
-        <Features />
-      </div>
+function WelcomePage() {
+    return (
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-xl font-semibold text-gray-900 py-4 text-center">Welcome to Our Community!</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Link href="/introduction">
+                    <div className="bg-green-400 border shadow rounded-lg p-6 flex flex-col items-center justify-center h-72 cursor-pointer">
+                        <h2 className="font-bold text-lg">Introductions</h2>
+                        <p>Meet and greet new members.</p>
+                    </div>
+                </Link>
+                <Link href="/announcements">
+                    <div className="bg-yellow-400 border shadow rounded-lg p-6 flex flex-col items-center justify-center h-72 cursor-pointer">
+                        <h2 className="font-bold text-lg text-gray-900">Announcements</h2>
+                        <p>Stay updated with the latest news.</p>
+                    </div>
+                </Link>
+                <Link href="/success">
+                    <div className=" bg-cyan-600 border shadow rounded-lg p-6 flex flex-col items-center justify-center h-72 cursor-pointer">
+                        <h2 className="font-bold text-lg">Success Stories</h2>
+                        <p>Get inspired by the success of others.</p>
+                    </div>
+                </Link>
+                <Link href="/career">
+                    <div className="bg-red-400 border shadow rounded-lg p-6 flex flex-col items-center justify-center h-72 cursor-pointer"> 
+                        <h2 className="font-bold text-lg">Career Discussions</h2>
+                        <p>Share and discuss career opportunities.</p>
+                    </div>
+                </Link>
+            </div>
+        </div>
+    );
+}
 
-      <div className="h-[50vh] bg-white" />
-    </>
-  );
-};
 
-const Features = () => {
-  return (
-    <div className="relative mx-auto grid h-full w-full max-w-7xl grid-cols-1 gap-8 px-4 md:grid-cols-2">
-      <Copy />
-      <Carousel />
-    </div>
-  );
-};
-
-const Copy = () => {
-  return (
-    <div className="flex h-fit w-full flex-col justify-center py-12 md:sticky md:top-0 md:h-screen">
-      <span className="w-fit rounded-full bg-indigo-500 px-4 py-2 text-sm uppercase text-indigo-100">
-        Lorem ipsum dolor
-      </span>
-      <h2 className="mb-4 mt-2 text-5xl font-medium leading-tight">
-        Learn and grow with Lorem Ipsum Dolor
-      </h2>
-      <p className="text-lg text-indigo-950">
-        Lorem ipsum dolor sit amet consectetur. Dolor quis a leo lobortis orci
-        tortor eget. Enim proin aliquam nulla a lacus pellentesque quam in. Nec
-        vel vel nulla nunc vel in molestie proin convallis. Leo et vulputate
-        tincidunt justo a varius et elementum.
-      </p>
-    </div>
-  );
-};
-
-const Carousel = () => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  return (
-    <div className="relative w-full">
-      <Gradient />
-
-      <div ref={ref} className="relative z-0 flex flex-col gap-6 md:gap-12">
-        <CarouselItem
-          scrollYProgress={scrollYProgress}
-          position={1}
-          numItems={4}
-        />
-        <CarouselItem
-          scrollYProgress={scrollYProgress}
-          position={2}
-          numItems={4}
-        />
-        <CarouselItem
-          scrollYProgress={scrollYProgress}
-          position={3}
-          numItems={4}
-        />
-        <CarouselItem
-          scrollYProgress={scrollYProgress}
-          position={4}
-          numItems={4}
-        />
-      </div>
-
-      <Buffer />
-    </div>
-  );
-};
-
-const CarouselItem = ({
-  scrollYProgress,
-  position,
-  numItems,
-}: {
-  scrollYProgress: MotionValue<number>;
-  position: number;
-  numItems: number;
-}) => {
-  const stepSize = 1 / numItems;
-  const end = stepSize * position;
-  const start = end - stepSize;
-
-  const opacity = useTransform(scrollYProgress, [start, end], [1, 0]);
-  const scale = useTransform(scrollYProgress, [start, end], [1, 0.75]);
-
-  return (
-    <motion.div
-      style={{
-        opacity,
-        scale,
-      }}
-      className="grid aspect-video w-full shrink-0 place-content-center rounded-2xl bg-neutral-900"
-    >
-      <span className="text-lg text-neutral-600">Feature demo here</span>
-    </motion.div>
-  );
-};
-
-const Gradient = () => (
-  <div className="sticky top-0 z-10 hidden h-24 w-full bg-gradient-to-b from-indigo-50 to-indigo-50/0 md:block" />
-);
-
-const Buffer = () => <div className="h-24 w-full md:h-48" />;
+export default WelcomePage

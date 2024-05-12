@@ -81,7 +81,7 @@ const SideBar = () => {
           <ul className="space-y-2 font-medium">
             <li>
               <Link href="introduction" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/introduction' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
-                Introduction <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">{channelCounts.introduction}</span>
+                Introduction <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">{channelCounts.introduction > 0 && channelCounts.introduction}</span>
               </Link>
             </li>
             <li>
@@ -100,7 +100,7 @@ const SideBar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/career" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
+              <Link href="/career" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-purple-400 link ${pathname === '/career' ? 'bg-lightPurple text-primaryPurple' : ''}`}>
 
                 <span className="count">Career Discussions</span>
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">{channelCounts.career > 0 && channelCounts.success}</span>

@@ -1,10 +1,13 @@
 
+import NavBar from '@/components/NavBar'
+import WelcomePage from '@/framer/WelcomePage'
 import React from 'react'
 
 const Home = () => {
   return (
     <div>
-      Hello
+      <NavBar headingVal='Welcome' />
+      <WelcomePage />
     </div>
   )
 }

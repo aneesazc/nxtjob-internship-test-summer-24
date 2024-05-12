@@ -4,22 +4,23 @@ import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { RootState } from '@/lib/store';
 import { fetchBookmarksFailure, fetchBookmarksStart, fetchBookmarksSuccess } from '@/lib/features/bookmarks/bookmarksSlice';
+import Link from 'next/link';
 
 
 
 const BookmarksComponent = () => {
     const dispatch = useAppDispatch();
     const { bookmarks, loading, error } = useAppSelector(state => state.bookmarks);
-  
+
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (!userId) {
             dispatch(fetchBookmarksFailure('User not logged in'));
             return;
         }
-  
+
         dispatch(fetchBookmarksStart());
-  
+
         axios.get(`http://127.0.0.1:8787/api/v1/users/${userId}/bookmarks`)
             .then(response => {
                 dispatch(fetchBookmarksSuccess(response.data.bookmarks));
@@ -28,23 +29,39 @@ const BookmarksComponent = () => {
                 dispatch(fetchBookmarksFailure(error.message));
             });
     }, [dispatch]);
-  
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-  
+
     return (
-        <div>
-            <h2>Your Bookmarks</h2>
+        <div className='max-w-5xl mx-auto flex flex-col items-center w-full'>
+            <div className="self-start mb-4 w-full">
+                <Link href="/">
+                    <span className="inline-block text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out cursor-pointer">
+                        ← Back
+                    </span>
+                </Link>
+            </div>
+            <h2 className="text-2xl font-bold text-center mb-4">Your Bookmarks</h2>
             {bookmarks.map((bookmark: any) => (
-                <div key={bookmark.postId}>
-                    <h3>{bookmark?.User?.username}</h3>
-                    <h2>{bookmark.content}</h2>
-                    <h4>{bookmark.channelId}</h4>
+                <div key={bookmark?.postId} className="p-3 sm:p-4 bg-white border shadow rounded-lg mb-3 sm:mb-5 w-full">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                            <div className='bg-primaryOrange w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white text-xs sm:text-sm'>
+                                {bookmark.User.username.charAt(0).toUpperCase()}
+                            </div>
+                            <h3 className="text-lg sm:text-xl font-medium ml-2">{bookmark?.User?.username}</h3>
+                        </div>
+                        <h4 className="text-xs sm:text-sm text-gray-500">{bookmark?.channelId}</h4>
+                    </div>
+                    <h2 className="text-base sm:text-lg">{bookmark?.content}</h2>
                 </div>
             ))}
         </div>
+
+
     );
-  };
+};
 
 
 export default BookmarksComponent;

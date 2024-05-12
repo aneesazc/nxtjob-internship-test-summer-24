@@ -42,8 +42,6 @@ export default GetPosts;
 //   useEffect(() => {
 //     dispatch(fetchPostsByChannel(channelId));
 //   }, [channelId, dispatch]);
-
-//   // You can render a loading indicator or error message based on the posts status or error
 //   if (postsStatus === 'loading') {
 //     return <p>Loading posts...</p>;
 //   }
