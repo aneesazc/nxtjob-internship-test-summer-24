@@ -45,11 +45,11 @@ This project leverages the following technologies:
 
 This architecture not only underscores a highly scalable and low-latency web application but also emphasizes reliability and global accessibility, making it suitable for a wide range of users and scenarios.
 
-Database Schema of the app-
+Database Schema of the application-
 ![DB Schema](images/dbSchema.png)
 
 
-Check out the live version of the Community App [here](https://a092705a.community-app.pages.dev/) to explore all its features.
+Check out the live version of the Community App [here](https://community-app.pages.dev/) to explore all its features. 
 
 
 
