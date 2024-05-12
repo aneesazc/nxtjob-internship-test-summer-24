@@ -2,6 +2,7 @@
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { Dispatch, SetStateAction, useState } from "react";
+import toast from "react-hot-toast";
 import { FiAlertCircle } from "react-icons/fi";
 
 const LoginModal = ({
@@ -16,7 +17,7 @@ const LoginModal = ({
 
   const handleLogin = async () => {
     if (!username.trim()) {
-      alert("Username cannot be empty.");
+      toast.error("Username cannot be empty.");
       return;
     }
     setLoading(true);

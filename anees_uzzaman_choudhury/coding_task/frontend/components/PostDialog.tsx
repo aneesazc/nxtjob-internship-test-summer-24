@@ -9,6 +9,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useAppDispatch } from '@/lib/hooks';
 import { postAdded } from '@/lib/features/posts/postSlice';
+import toast from 'react-hot-toast';
 
 const PostDialog = ({ open, setOpen }: { open: any, setOpen: any }) => {
   const pathname = usePathname()
@@ -44,13 +45,13 @@ const PostDialog = ({ open, setOpen }: { open: any, setOpen: any }) => {
       if (response.data.message === 'Post created') {
         dispatch(postAdded(response.data))
         setOpen(false);
-        alert('Post created successfully');
+        toast.success('Post created successfully');
       } else {
-        alert('Failed to create post');
+        toast.error('Failed to create post');
       }
     } catch (error) {
       console.error('Failed to create post:', error);
-      alert('Error creating post');
+      toast.error('Error creating post');
     }
   };
 

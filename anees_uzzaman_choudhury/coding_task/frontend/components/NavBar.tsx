@@ -1,12 +1,32 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LogoHeader from './LogoHeader'
-import { MagnifyingGlassIcon, BookmarkIcon, BellIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons'
+import { MagnifyingGlassIcon, BookmarkIcon, BellIcon } from '@radix-ui/react-icons'
+import { IoMdLogIn } from "react-icons/io";
 import LoginModal from '@/framer/LoginModal'
 import Link from 'next/link';
+import { useAppDispatch } from '@/lib/hooks';
+import { setSearchTerm } from '@/lib/action';
 
 const NavBar = ({headingVal}: {headingVal: string}) => {
+    const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState(false)
+
+    const [inputValue, setInputValue] = useState('');
+
+  // Debounce search term
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      dispatch(setSearchTerm(inputValue));
+    }, 500); // 500 ms delay
+
+    return () => clearTimeout(timeoutId); // Clear timeout on component unmount or inputValue change
+  }, [inputValue, dispatch]);
+
+  const handleInputChange = (event: any) => {
+    setInputValue(event.target.value);
+  };
+
     return (
         <div className='flex w-full'>
             <div>
@@ -24,17 +44,22 @@ const NavBar = ({headingVal}: {headingVal: string}) => {
                     </div>
                     <div className='flex items-center'>
                         <div className="flex items-center justify-between bg-[#F7F7F8] rounded-md px-4">
-                            <input type="text" placeholder="Search..." className="w-full py-2 outline-none bg-transparent focus:ring focus:ring-blue-500 focus:border-blue-500" />
+                            <input 
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            type="text" 
+                            placeholder="Search..." 
+                            className="w-full py-2 outline-none bg-transparent" />
                             <div className="flex items-center ml-4">
                                 <MagnifyingGlassIcon className="w-6 h-6 text-gray-500" />
                             </div>
                         </div>
                         <Link href={'/bookmarks'}><BookmarkIcon className="ml-3 w-6 h-6" /></Link>
                         
-                        <BellIcon className="ml-2 w-6 h-6" />
                         <button onClick={() => setIsOpen(true)}>
-                            <QuestionMarkCircledIcon className="ml-2 w-6 h-6 hidden sm:inline-block" />
+                            <IoMdLogIn className="ml-2 w-6 h-6" />
                         </button>
+                        <BellIcon className="hidden sm:inline-block ml-2 w-6 h-6" />
                             <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
                     </div>
                 </nav>

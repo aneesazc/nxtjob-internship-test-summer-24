@@ -30,8 +30,26 @@ const bookmarkSlice = createSlice({
         state.error = action.payload;
         state.loading = false;
     },
+    toggleBookmark(state, action: PayloadAction<string>) {
+        const index = state.bookmarks.indexOf(action.payload);
+        if (index === -1) {
+            state.bookmarks.push(action.payload);  // If not found, add to bookmarks
+        } else {
+            state.bookmarks.splice(index, 1);  // If found, remove from bookmarks
+        }
+    },
+    setBookmarks(state, action: PayloadAction<string[]>) {
+        state.bookmarks = action.payload;
+    }
   },
 });
 
-export const { fetchBookmarksFailure, fetchBookmarksStart, fetchBookmarksSuccess } = bookmarkSlice.actions;
-export default bookmarkSlice.reducer;
+export const {
+    fetchBookmarksFailure,
+    fetchBookmarksStart,
+    fetchBookmarksSuccess,
+    toggleBookmark,
+    setBookmarks
+  } = bookmarkSlice.actions;
+  
+  export default bookmarkSlice.reducer;

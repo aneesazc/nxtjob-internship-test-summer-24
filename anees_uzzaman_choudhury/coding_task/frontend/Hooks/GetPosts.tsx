@@ -1,30 +1,28 @@
 "use client";
 import React, { useEffect } from 'react';
-import axios from 'axios';
+import { useFetchPostsByChannelQuery } from '@/lib/features/api/apiSlice';
 import { useAppDispatch } from '@/lib/hooks';
 import { setPosts } from '@/lib/features/posts/postSlice';
 
-const GetPosts = ({channelId}: {channelId: string}) => {
+const GetPosts = ({ channelId }: { channelId: string }) => {
+  const { data: posts, isFetching, error } = useFetchPostsByChannelQuery(channelId);
   const dispatch = useAppDispatch();
 
+  // Effect to handle the dispatch whenever posts data changes
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get(`http://127.0.0.1:8787/api/v1/posts/${channelId}`);
-        dispatch(setPosts(response.data)); // Dispatch the setPosts action with the fetched data
-        // console.log('Posts fetched:', response.data);
-      } catch (error) {
-        console.error('Failed to fetch posts:', error);
-      }
-    };
+    if (posts) {
+      dispatch(setPosts(posts));
+    }
+  }, [posts, dispatch]);
 
-    fetchPosts();
-}, [dispatch]);
+  if (isFetching) return <div></div>;
+  if (error) return <div>Failed to load posts</div>;
 
-return <></>;
+  return null;  // Render nothing or any placeholder as needed
 };
 
 export default GetPosts;
+
 
 
 

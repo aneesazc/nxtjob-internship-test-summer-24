@@ -1,16 +1,12 @@
-import NavBar from "@/components/NavBar";
-import SideBar from "@/components/SideBar";
-import TopView from "@/components/TopView";
+"use client"
 
+import { WelcomePage } from '@/framer/WelcomePage'
+import React from 'react'
 
-export default function Home() {
+const Home = () => {
   return (
-    <div>
-      <NavBar headingVal="Career Discussions" />
-      <div className="flex">
-        <SideBar />
-        <TopView headingVal="Career Discussions"/>
-      </div>
-    </div>
-  );
+    <WelcomePage />
+  )
 }
+
+export default Home

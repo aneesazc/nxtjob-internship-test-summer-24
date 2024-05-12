@@ -1,9 +1,9 @@
-import Bookmarks from "@/Hooks/GetBookmarks"
+import BookmarksComponent from "@/Hooks/GetBookmarks"
 
 
 const page = () => {
   return (
-    <Bookmarks />
+    <BookmarksComponent />
   )
 }
 

@@ -1,16 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit';
 import postsReducer from './features/posts/postSlice';
 import bookmarksReducer from './features/bookmarks/bookmarksSlice'
+import searchReducer from './searchReducer';
+import { apiSlice } from './features/api/apiSlice';
+
 
 // Function to create a new store instance
 export const makeStore = () => {
     return configureStore({
         reducer: {
             posts: postsReducer,
-            bookmarks: bookmarksReducer
+            bookmarks: bookmarksReducer,
+            search: searchReducer,
+            [apiSlice.reducerPath]: apiSlice.reducer
+
         },
         middleware: (getDefaultMiddleware) =>
-            getDefaultMiddleware().concat()
+            getDefaultMiddleware().concat(apiSlice.middleware)
     });
 };
 

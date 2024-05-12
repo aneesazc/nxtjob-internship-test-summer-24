@@ -11,14 +11,22 @@ import CommentsCard from "./CommentsCard";
 import axios from "axios";
 import LoginModal from "@/framer/LoginModal";
 import BookmarkButton from "@/Hooks/AddBookmarks";
+import toast from "react-hot-toast";
 
 const MainScreen = () => {
-  const posts = useAppSelector(state => state.posts.filteredPosts);
-  console.log(posts);
   const dispatch = useAppDispatch();
+  const posts = useAppSelector(state => state.posts.filteredPosts);
   const selectedTag = useAppSelector(state => state.posts.selectedTag);
+  const searchTerm = useAppSelector(state => state.search.searchTerm);
 
-  // const [selectedOption, setSelectedOption] = useState('');
+  // Combining filters for selected tag and search term
+  const visiblePosts = posts.filter(post => {
+    const matchesSearchTerm = post.username.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesTag = selectedTag ? post.tagId.includes(selectedTag) : true; 
+
+    return matchesSearchTerm && matchesTag;
+  });
+
   const [activePostId, setActivePostId] = useState(null);
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [newComment, setNewComment] = useState('');
@@ -31,17 +39,17 @@ const MainScreen = () => {
       return;
     }
     setActivePostId(activePostId === postId ? null : postId);
-    setShowCommentInput(false); // Hide comment input when toggling different posts
+    setShowCommentInput(false); 
   };
 
   const handleAddComment = async (postId: any) => {
     const userId = localStorage.getItem('userId');
     if (!userId) {
-      alert('You must be logged in to add comments.');
+      toast.error('You must be logged in to add comments.');
       return;
     }
     if (!newComment.trim()) {
-      alert('Comment cannot be empty.');
+      toast.error('Comment cannot be empty.');
       return;
     }
 
@@ -66,13 +74,13 @@ const MainScreen = () => {
         }));
         setNewComment('');
         setShowCommentInput(false);
-        alert('Comment added successfully');
+        toast.success('Comment added successfully');
       } else {
-        alert('Failed to add comment');
+        toast.error('Failed to add comment');
       }
     } catch (error) {
       console.error('Error adding comment:', error);
-      alert('Error adding comment');
+      toast.error('Error adding comment');
     }
   };
 
@@ -86,7 +94,6 @@ const MainScreen = () => {
   const { scrollYProgress } = useScroll();
   const [initialLoad, setInitialLoad] = useState(true);
 
-  // Create a spring animation for the scaleX transformation
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
@@ -95,18 +102,16 @@ const MainScreen = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // If there's any scroll, we set initialLoad to false to show the progress bar
       if (scrollYProgress.get() > 0) {
         setInitialLoad(false);
       }
     };
 
-    // Setup event listeners
+
     document.addEventListener('scroll', handleScroll);
 
-    // Cleanup function to remove the event listener
     return () => document.removeEventListener('scroll', handleScroll);
-  }, []);  // Empty dependency array to run only on mount and unmount
+  }, []);  
 
   return (
     <div>
@@ -133,7 +138,7 @@ const MainScreen = () => {
       </div>
       <hr className="h-px my-1 sm:my-2 bg-gray-200 border-0"></hr>
       <main className="flex-grow py-1 sm:py-2">
-      {posts.map((post) => (
+      {visiblePosts.map((post) => (
         <div key={`${post.userId}-${post.postId}`} className="p-3 sm:p-4 bg-white border shadow rounded-lg mb-3 sm:mb-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
