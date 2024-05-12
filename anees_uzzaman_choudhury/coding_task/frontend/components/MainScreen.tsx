@@ -37,6 +37,7 @@ const MainScreen = () => {
     const userId = localStorage.getItem('userId');
     if (!userId) {
       setIsOpen(true);
+      toast.error("Login to start commenting!")
       return;
     }
     setActivePostId(activePostId === postId ? null : postId);
@@ -156,7 +157,6 @@ const MainScreen = () => {
               <ChangeLikes post={post} />
               <div className="flex items-center cursor-pointer" onClick={() => toggleComments(post.postId)}>
                 <FaRegCommentDots className="mr-1 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
-                <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
                 <span className="sm:text-lg text-gray-400">{post.Comments.length}</span>
               </div>
             </div>

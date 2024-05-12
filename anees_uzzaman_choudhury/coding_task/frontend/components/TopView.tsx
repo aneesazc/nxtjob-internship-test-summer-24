@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import PostDialog from './PostDialog';
 import MainScreen from './MainScreen';
 import LoginModal from '@/framer/LoginModal';
+import toast from 'react-hot-toast';
 
 const TopView = ({ headingVal }: { headingVal: string }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +15,7 @@ const TopView = ({ headingVal }: { headingVal: string }) => {
         if (!userId) {
             console.error('No user ID found, user must be logged in to like posts');
             setIsOpen(true);
+            toast.error("Login to start posting!")
             return;
         }
         else {
@@ -50,7 +52,6 @@ const TopView = ({ headingVal }: { headingVal: string }) => {
                         }
                     >
                         Start a post
-                        <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
                     </button>
                 </div>
                 <MainScreen />

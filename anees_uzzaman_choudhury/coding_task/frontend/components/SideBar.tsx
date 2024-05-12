@@ -3,6 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import { usePathname } from 'next/navigation'
 import React, { useState, useEffect, useRef } from "react";
+import toast from "react-hot-toast";
 
 const SideBar = () => {
   const pathname = usePathname()
@@ -19,6 +20,7 @@ const SideBar = () => {
 
     if (localStorage.getItem('userId')) {
       localStorage.removeItem('userId'); // Remove userId from localStorage
+      toast.success("Logged out successfully!")
     }
   };
 

@@ -20,6 +20,7 @@ A Community App where users can post content, receive real-time updates, react t
 - **Performance Improvements**: Includes client-side caching through RTK Query and Redux to ensure efficient page renders only upon receiving new data, supplemented by database-level indexing for rapid query execution.
 - **Responsive Design**: Fully responsive design ensures a seamless user experience across all device sizes.
 - **Collapsing Sidebar**: Features a collapsible sidebar for quick navigation between different sections of the application, optimizing space on smaller screens.
+- **Instant Feedback**: Instant feedback available wether an operation was successful or not with the help of react hot toast library
 
 ## Technology Stack
 

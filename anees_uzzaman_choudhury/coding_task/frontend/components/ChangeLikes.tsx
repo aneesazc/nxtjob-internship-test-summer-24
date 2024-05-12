@@ -2,6 +2,7 @@
 import LoginModal from '@/framer/LoginModal';
 import axios from 'axios';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { IoIosHeartEmpty } from "react-icons/io";
 import { IoIosHeart } from "react-icons/io";
 
@@ -16,6 +17,7 @@ const ChangeLikes = ({ post }: { post: any }) => {
     if (!userId) {
       console.error('No user ID found, user must be logged in to like posts');
       setIsOpen(true);
+      toast.error("Login to like a post")
       return;
     }
 
@@ -46,7 +48,6 @@ const ChangeLikes = ({ post }: { post: any }) => {
   return (
     <button onClick={toggleLike} disabled={isLoading} className="flex items-center text-xs sm:text-sm text-gray-500" aria-pressed={liked}>
       {(likes || liked) ? <IoIosHeart className='text-red-500 w-4 h-4 sm:w-5 sm:h-5'/>: <IoIosHeartEmpty className='text-gray-400 w-4 h-4 sm:w-5 sm:h-5' />} <span className='m-1 sm:text-lg text-gray-400'>{likes}</span>
-      <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </button>
   );
 };
