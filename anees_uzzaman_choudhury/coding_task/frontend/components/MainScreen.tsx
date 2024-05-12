@@ -55,7 +55,7 @@ const MainScreen = () => {
     }
 
     try {
-      const response = await axios.post('http://127.0.0.1:8787/api/v1/comments', {
+      const response = await axios.post('https://backend.anees-azc.workers.dev/api/v1/comments', {
         postId,
         userId,
         content: newComment,

@@ -24,7 +24,7 @@ const SideBar = () => {
           console.error('No user ID found, user must be logged in to fetch channel counts');
           return;
         }
-        const response = await axios.get('http://127.0.0.1:8787/api/v1/counts', {
+        const response = await axios.get('https://backend.anees-azc.workers.dev/api/v1/counts', {
           params: {
             userId: userId
           }

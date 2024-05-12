@@ -36,7 +36,7 @@ const PostDialog = ({ open, setOpen }: { open: any, setOpen: any }) => {
   const createPostHandler = async () => {
     try {
       const userId = localStorage.getItem('userId');
-      const response = await axios.post(`http://127.0.0.1:8787/api/v1/posts`, {
+      const response = await axios.post(`https://backend.anees-azc.workers.dev/api/v1/posts`, {
         content: content,
         channelId: pathname.slice(1),
         tagId: [selectedOption || "All"],

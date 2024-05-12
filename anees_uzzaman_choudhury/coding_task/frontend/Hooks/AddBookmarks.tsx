@@ -17,7 +17,7 @@ const BookmarkButton = ({ postId }: { postId: string }) => {
         }
   
         try {
-          const response = await axios.get(`http://127.0.0.1:8787/api/v1/users/${userId}/showBookmarkIds`);
+          const response = await axios.get(`https://backend.anees-azc.workers.dev/api/v1/users/${userId}/showBookmarkIds`);
           if (response.data && response.data.bookmarkIds) {
             setIsBookmarked(response.data.bookmarkIds.includes(postId));
           }
@@ -40,7 +40,7 @@ const BookmarkButton = ({ postId }: { postId: string }) => {
       setIsLoading(true);
   
       try {
-        const url = `http://127.0.0.1:8787/api/v1/users/${userId}/bookmark/${postId}`;
+        const url = `https://backend.anees-azc.workers.dev/api/v1/users/${userId}/bookmark/${postId}`;
         // Toggle based on the current state
         // const method = isBookmarked ? 'delete' : 'post';
         await axios.post(url);

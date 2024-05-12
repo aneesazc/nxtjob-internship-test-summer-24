@@ -21,7 +21,7 @@ const BookmarksComponent = () => {
 
         dispatch(fetchBookmarksStart());
 
-        axios.get(`http://127.0.0.1:8787/api/v1/users/${userId}/bookmarks`)
+        axios.get(`https://backend.anees-azc.workers.dev/api/v1/users/${userId}/bookmarks`)
             .then(response => {
                 dispatch(fetchBookmarksSuccess(response.data.bookmarks));
             })
@@ -81,7 +81,7 @@ export default BookmarksComponent;
 
 //     const fetchBookmarks = async () => {
 //       try {
-//         const response = await axios.get(`http://127.0.0.1:8787/api/v1/users/${userId}/bookmarks`);
+//         const response = await axios.get(`https://backend.anees-azc.workers.dev/api/v1/users/${userId}/bookmarks`);
 //         setBookmarks(response.data.bookmarks);
 //         setLoading(false);
 //       } catch (err) {
