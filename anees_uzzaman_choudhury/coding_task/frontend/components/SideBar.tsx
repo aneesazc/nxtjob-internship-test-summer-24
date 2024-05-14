@@ -9,78 +9,87 @@ const SideBar = () => {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false);
   const sidebarRef = useRef<HTMLElement | null>(null);
-  const [channelCounts, setChannelCounts] = useState({
-    introduction: 0,
-    announcements: 0,
-    success: 0,
-    career: 0,
-  });
+  type ChannelCounts = {
+    introduction: number;
+    announcements: number;
+    success: number;
+    career: number;
+};
 
-  const [prevChannelCounts, setPrevChannelCounts] = useState({
-    introduction: 0,
-    announcements: 0,
-    success: 0,
-    career: 0,
-  });
+const [channelCounts, setChannelCounts] = useState({
+  introduction: 0,
+  announcements: 0,
+  success: 0,
+  career: 0,
+});
 
-  useEffect(() => {
-    // Only run this effect in the browser
-    if (typeof window === "undefined") {
+// Initialize from local storage or use default values
+const [prevChannelCounts, setPrevChannelCounts] = useState(() => {
+  if (typeof window !== "undefined") {
+    const savedCounts = localStorage.getItem('prevChannelCounts');
+    return savedCounts ? JSON.parse(savedCounts) : {
+      introduction: 0,
+      announcements: 0,
+      success: 0,
+      career: 0,
+    };
+  }
+  return { introduction: 0, announcements: 0, success: 0, career: 0 };
+});
+
+const isFirstRender = useRef(true);
+
+useEffect(() => {
+  const fetchChannelCounts = async () => {
+    if (typeof window === "undefined") return;
+
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      console.error('No user ID found, user must be logged in to fetch channel counts');
       return;
     }
+    try {
+      const response = await axios.get('https://backend.anees-azc.workers.dev/api/v1/counts', {
+        params: { userId }
+      });
+      const newData = response.data;
 
-    // Initialize prevChannelCounts from local storage or set to default values
-    const savedCounts = localStorage.getItem('prevChannelCounts');
-    if (savedCounts) {
-      setPrevChannelCounts(JSON.parse(savedCounts));
-    }
+      console.log('New Data:', newData);
+      console.log('Previous Data:', prevChannelCounts);
 
-    const fetchChannelCounts = async () => {
-      try {
-        const userId = localStorage.getItem('userId');
-        if (!userId) {
-          console.error('No user ID found, user must be logged in to fetch channel counts');
-          return;
-        }
-        const response = await axios.get('https://backend.anees-azc.workers.dev/api/v1/counts', {
-          params: { userId }
+      if (!isFirstRender.current) {
+        Object.keys(newData).forEach(key => {
+          const channel = key as keyof typeof newData;
+          if (newData[channel] > prevChannelCounts[channel]) {
+            toast(`New notifications in ${channel as string} channel!`, { icon: '🔔' });
+          }
         });
-
-        // Trigger alerts if counts have increased
-        compareAndAlert(response.data);
-        setChannelCounts(response.data);
-        localStorage.setItem('prevChannelCounts', JSON.stringify(response.data));
-      } catch (error) {
-        console.error('Failed to fetch channel counts:', error);
+      } else {
+        isFirstRender.current = false;
       }
-    };
 
-    fetchChannelCounts();
-    const intervalId = setInterval(fetchChannelCounts, 10000); // Poll every 10 seconds
-    return () => clearInterval(intervalId); // Cleanup on unmount
-  }, []);
+      setChannelCounts(newData);
+      localStorage.setItem('prevChannelCounts', JSON.stringify(newData));
+      setPrevChannelCounts(newData);
+    } catch (error) {
+      console.error('Failed to fetch channel counts:', error);
+    }
+  };
 
-  function compareAndAlert(newCounts: any) {
-    if (newCounts.introduction > prevChannelCounts.introduction) {
-      toast('New notifications in introduction channel!', { icon: '🔔' });
-    }
-    if (newCounts.announcements > prevChannelCounts.announcements) {
-      toast('New notifications in announcements channel!', { icon: '🔔' });
-    }
-    if (newCounts.success > prevChannelCounts.success) {
-      toast('New notifications in success channel!', { icon: '🔔' });
-    }
-    if (newCounts.career > prevChannelCounts.career) {
-      toast('New notifications in career channel!', { icon: '🔔' });
-    }
-    setPrevChannelCounts(newCounts);
-  }
+  fetchChannelCounts();
+  const intervalId = setInterval(fetchChannelCounts, 10000);
+  return () => clearInterval(intervalId);
+}, []);
+
 
 
   const handleLogout = () => {
     if (localStorage.getItem('userId')) {
       localStorage.removeItem('userId'); // Remove userId from localStorage
       toast.success("Logged out successfully!");
+    }
+    if (localStorage.getItem('prevChannelCounts')) {
+      localStorage.removeItem('prevChannelCounts'); // Remove prevChannelCounts from localStorage
     }
   };
 
