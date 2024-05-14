@@ -16,14 +16,25 @@ const SideBar = () => {
     career: 0,
   });
 
-  // Initialize prevChannelCounts from local storage or set to default values
-  const [prevChannelCounts, setPrevChannelCounts] = useState(() => {
-    const savedCounts = localStorage.getItem('prevChannelCounts');
-    return savedCounts ? JSON.parse(savedCounts) : { introduction: 0, announcements: 0, success: 0, career: 0 };
+  const [prevChannelCounts, setPrevChannelCounts] = useState({
+    introduction: 0,
+    announcements: 0,
+    success: 0,
+    career: 0,
   });
 
   useEffect(() => {
-    // Function to fetch the latest counts
+    // Only run this effect in the browser
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    // Initialize prevChannelCounts from local storage or set to default values
+    const savedCounts = localStorage.getItem('prevChannelCounts');
+    if (savedCounts) {
+      setPrevChannelCounts(JSON.parse(savedCounts));
+    }
+
     const fetchChannelCounts = async () => {
       try {
         const userId = localStorage.getItem('userId');
@@ -36,24 +47,9 @@ const SideBar = () => {
         });
 
         // Trigger alerts if counts have increased
-        if (response.data.introduction > prevChannelCounts.introduction) {
-          toast('New notifications in introduction channel!', { icon: '🔔' });
-        }
-        if (response.data.announcements > prevChannelCounts.announcements) {
-          toast('New notifications in announcements channel!', { icon: '🔔' });
-        }
-        if (response.data.success > prevChannelCounts.success) {
-          toast('New notifications in success channel!', { icon: '🔔' });
-        }
-        if (response.data.career > prevChannelCounts.career) {
-          toast('New notifications in career channel!', { icon: '🔔' });
-        }
-
-        // Update previous counts to current counts after comparisons
-        setPrevChannelCounts(response.data);
-        // Also save to local storage
-        localStorage.setItem('prevChannelCounts', JSON.stringify(response.data));
+        compareAndAlert(response.data);
         setChannelCounts(response.data);
+        localStorage.setItem('prevChannelCounts', JSON.stringify(response.data));
       } catch (error) {
         console.error('Failed to fetch channel counts:', error);
       }
@@ -63,6 +59,22 @@ const SideBar = () => {
     const intervalId = setInterval(fetchChannelCounts, 10000); // Poll every 10 seconds
     return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
+
+  function compareAndAlert(newCounts: any) {
+    if (newCounts.introduction > prevChannelCounts.introduction) {
+      toast('New notifications in introduction channel!', { icon: '🔔' });
+    }
+    if (newCounts.announcements > prevChannelCounts.announcements) {
+      toast('New notifications in announcements channel!', { icon: '🔔' });
+    }
+    if (newCounts.success > prevChannelCounts.success) {
+      toast('New notifications in success channel!', { icon: '🔔' });
+    }
+    if (newCounts.career > prevChannelCounts.career) {
+      toast('New notifications in career channel!', { icon: '🔔' });
+    }
+    setPrevChannelCounts(newCounts);
+  }
 
 
   const handleLogout = () => {
