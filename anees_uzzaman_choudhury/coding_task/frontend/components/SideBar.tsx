@@ -5,80 +5,50 @@ import { usePathname } from 'next/navigation'
 import React, { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 
+type ChannelCounts = {
+  introduction: number;
+  announcements: number;
+  success: number;
+  career: number;
+};
+
 const SideBar = () => {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false);
   const sidebarRef = useRef<HTMLElement | null>(null);
-  type ChannelCounts = {
-    introduction: number;
-    announcements: number;
-    success: number;
-    career: number;
-};
 
-const [channelCounts, setChannelCounts] = useState({
+const [channelCounts, setChannelCounts] = useState<ChannelCounts>({
   introduction: 0,
   announcements: 0,
   success: 0,
   career: 0,
 });
 
-// Initialize from local storage or use default values
-const [prevChannelCounts, setPrevChannelCounts] = useState(() => {
-  if (typeof window !== "undefined") {
-    const savedCounts = localStorage.getItem('prevChannelCounts');
-    return savedCounts ? JSON.parse(savedCounts) : {
-      introduction: 0,
-      announcements: 0,
-      success: 0,
-      career: 0,
-    };
-  }
-  return { introduction: 0, announcements: 0, success: 0, career: 0 };
-});
-
-const isFirstRender = useRef(true);
-
 useEffect(() => {
+  // Function to fetch the latest counts
   const fetchChannelCounts = async () => {
-    if (typeof window === "undefined") return;
-
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
-      console.error('No user ID found, user must be logged in to fetch channel counts');
-      return;
-    }
     try {
-      const response = await axios.get('https://backend.anees-azc.workers.dev/api/v1/counts', {
-        params: { userId }
-      });
-      const newData = response.data;
-
-      console.log('New Data:', newData);
-      console.log('Previous Data:', prevChannelCounts);
-
-      if (!isFirstRender.current) {
-        Object.keys(newData).forEach(key => {
-          const channel = key as keyof typeof newData;
-          if (newData[channel] > prevChannelCounts[channel]) {
-            toast(`New notifications in ${channel as string} channel!`, { icon: '🔔' });
-          }
-        });
-      } else {
-        isFirstRender.current = false;
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        console.error('No user ID found, user must be logged in to fetch channel counts');
+        return;
       }
-
-      setChannelCounts(newData);
-      localStorage.setItem('prevChannelCounts', JSON.stringify(newData));
-      setPrevChannelCounts(newData);
+      const response = await axios.get('https://backend.anees-azc.workers.dev/api/v1/counts', {
+        params: {
+          userId: userId
+        }
+      });
+      setChannelCounts(response.data);
     } catch (error) {
       console.error('Failed to fetch channel counts:', error);
     }
   };
 
+  // Fetch counts initially and set up polling
   fetchChannelCounts();
-  const intervalId = setInterval(fetchChannelCounts, 10000);
-  return () => clearInterval(intervalId);
+  const intervalId = setInterval(fetchChannelCounts, 10000); // Poll every 10 seconds
+
+  return () => clearInterval(intervalId); 
 }, []);
 
 
@@ -87,9 +57,6 @@ useEffect(() => {
     if (localStorage.getItem('userId')) {
       localStorage.removeItem('userId'); // Remove userId from localStorage
       toast.success("Logged out successfully!");
-    }
-    if (localStorage.getItem('prevChannelCounts')) {
-      localStorage.removeItem('prevChannelCounts'); // Remove prevChannelCounts from localStorage
     }
   };
 
