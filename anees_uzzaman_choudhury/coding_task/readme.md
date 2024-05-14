@@ -15,12 +15,13 @@ A Community App where users can post content, receive real-time updates, react t
 
 ## Additional Features
 
-- **Live Notification Count**: Updates the notification count in real-time as new posts are made across various channels, implemented via short polling due to compatibility issues with websockets and the Hono framework on Cloudflare Workers.
+- **Live Notification Count**: Updates the notification count in real-time as new posts are made across various channels and notifies users, implemented via short polling due to compatibility issues with websockets and the Hono framework on Cloudflare Workers.
 - **Scroll Progress Bar**: Displays a progress bar to indicate the percentage of posts viewed as the user scrolls through the page.
 - **Performance Improvements**: Includes client-side caching through RTK Query and Redux to ensure efficient page renders only upon receiving new data, supplemented by database-level indexing for rapid query execution.
 - **Responsive Design**: Fully responsive design ensures a seamless user experience across all device sizes.
 - **Collapsing Sidebar**: Features a collapsible sidebar for quick navigation between different sections of the application, optimizing space on smaller screens.
 - **Instant Feedback**: Instant feedback available wether an operation was successful or not with the help of react hot toast library
+- **Caching**: Implemented Prisma Accelerate for efficient connection pooling and optimized query performance by utilizing TTL (Time To Live) and SWR (Stale While Revalidate) caching strategies. This approach significantly improves data retrieval times and reduces database load, ensuring a faster and more scalable application.
 
 ## Technology Stack
 
