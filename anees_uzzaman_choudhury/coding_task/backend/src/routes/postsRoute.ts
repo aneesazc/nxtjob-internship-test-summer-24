@@ -103,6 +103,10 @@ posts.get("/:channelId", async (c) => {
   }).$extends(withAccelerate());
 
   const { channelId } = c.req.param();
+  const page = parseInt(c.req.query("page") ?? "1", 10) || 1;
+  const limit = parseInt(c.req.query("limit") ?? "10", 10) || 10;
+
+  const offset = (page - 1) * limit;
 
   try {
     const posts = await prisma.post.findMany({
@@ -116,6 +120,8 @@ posts.get("/:channelId", async (c) => {
       orderBy: {
         createdAt: "desc",
       },
+      skip: offset, // Skip the number of records
+      take: limit, // Take the number of records
       select: {
         postId: true,
         content: true,
@@ -143,21 +149,40 @@ posts.get("/:channelId", async (c) => {
           },
         },
         _count: {
-          // Use the `_count` property to get aggregation results
           select: {
             LikedBy: true, // Count the likes by referring to the relation name
           },
         },
       },
     });
+
+    const totalPosts = await prisma.post.count({
+      where: {
+        channelId: channelId,
+      },
+    });
+
+    const totalPages = Math.ceil(totalPosts / limit);
+
     const formattedPosts = posts.map((post) => ({
       ...post,
       username: post.User.username,
-      likes: post._count.LikedBy, // Access the count of likes from the aggregation result
+      likes: post._count.LikedBy,
       Comments: post.Comments,
     }));
 
-    return c.json(formattedPosts, 200);
+    return c.json(
+      {
+        data: formattedPosts,
+        meta: {
+          page: page,
+          limit: limit,
+          totalPages: totalPages,
+          totalPosts: totalPosts,
+        },
+      },
+      200
+    );
   } catch (error) {
     console.error("Failed to fetch posts:", error);
     return c.json({ message: "Error fetching posts" }, 500);
