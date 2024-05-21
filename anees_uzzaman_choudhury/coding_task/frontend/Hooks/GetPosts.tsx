@@ -17,7 +17,7 @@ const GetPosts = ({ channelId }: { channelId: string }) => {
   }, [posts, dispatch]);
 
   const handleNextPage = () => {
-    if (posts.meta.totalPages > page) {
+    if (posts.meta.hasNextPage) {
       setPage(page + 1);
     }
   };
@@ -31,10 +31,11 @@ const GetPosts = ({ channelId }: { channelId: string }) => {
   if (isFetching) return <div></div>;
   if (error) return <div>Failed to load posts</div>;
 
-  return null
+  return null;
 };
 
 export default GetPosts;
+
 
 
 

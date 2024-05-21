@@ -110,10 +110,6 @@ posts.get("/:channelId", async (c) => {
 
   try {
     const posts = await prisma.post.findMany({
-      cacheStrategy: {
-        ttl: 20, // Cache the response for 20 seconds
-        swr: 6, // Enable stale-while-revalidate for 6 seconds
-      },
       where: {
         channelId: channelId, // Filter posts by channelId
       },
@@ -121,7 +117,7 @@ posts.get("/:channelId", async (c) => {
         createdAt: "desc",
       },
       skip: offset, // Skip the number of records
-      take: limit, // Take the number of records
+      take: limit + 1, // Take one more record than the limit to determine if there's a next page
       select: {
         postId: true,
         content: true,
@@ -156,15 +152,8 @@ posts.get("/:channelId", async (c) => {
       },
     });
 
-    const totalPosts = await prisma.post.count({
-      where: {
-        channelId: channelId,
-      },
-    });
-
-    const totalPages = Math.ceil(totalPosts / limit);
-
-    const formattedPosts = posts.map((post) => ({
+    const hasNextPage = posts.length > limit;
+    const formattedPosts = posts.slice(0, limit).map((post) => ({
       ...post,
       username: post.User.username,
       likes: post._count.LikedBy,
@@ -177,8 +166,7 @@ posts.get("/:channelId", async (c) => {
         meta: {
           page: page,
           limit: limit,
-          totalPages: totalPages,
-          totalPosts: totalPosts,
+          hasNextPage: hasNextPage,
         },
       },
       200

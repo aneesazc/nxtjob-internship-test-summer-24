@@ -43,15 +43,15 @@ const SideBar = () => {
         });
         setChannelCounts(response.data);
 
-        const res2 = await axios.get(`${BACKEND_URL}/api/v1/comments${pathname}`, {
-          params: { userId: userId },
-        });
+        // const res2 = await axios.get(`${BACKEND_URL}/api/v1/comments${pathname}`, {
+        //   params: { userId: userId },
+        // });
 
-        let newNotifCount = res2.data.notifCount;
-        if (newNotifCount == 1) {
-          setNotifCounts(newNotifCount);
-          toast('New notification received', { icon: '🔔' });
-        }
+        // let newNotifCount = res2.data.notifCount;
+        // if (newNotifCount == 1) {
+        //   setNotifCounts(newNotifCount);
+        //   toast('New notification received', { icon: '🔔' });
+        // }
 
 
       } catch (error) {
